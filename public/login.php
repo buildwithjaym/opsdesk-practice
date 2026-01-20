@@ -1,5 +1,6 @@
 <?php
 session_start();
+$error = isset($_GET["error"]) ? $_GET["error"] : "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,6 @@ session_start();
 
       --radius:16px;
 
-      /* Glass */
       --glass-bg: rgba(255,255,255,0.18);
       --glass-border: rgba(255,255,255,0.28);
     }
@@ -35,14 +35,13 @@ session_start();
       background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
       font-family: Arial, sans-serif;
       color: var(--text);
+      overflow:hidden;
     }
 
-    /* Optional: soft glow blobs for nicer background */
     body::before,
     body::after{
       content:"";
       position:fixed;
-      inset:auto;
       width:320px;
       height:320px;
       border-radius:50%;
@@ -69,7 +68,6 @@ session_start();
       padding:24px;
       border-radius:var(--radius);
 
-      /* Glassmorphism */
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
@@ -134,22 +132,38 @@ session_start();
       margin:0;
       font-size:22px;
       font-weight:700;
-      color: #ffffff; 
+      color: #ffffff;
     }
     #card-title p{
       margin:6px 0 0 0;
       font-size:13px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.75);
     }
 
-    form{
-      margin-top:10px;
+    #error-box{
+      margin: 0 0 12px 0;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(239, 68, 68, 0.18);
+      border: 1px solid rgba(255,255,255,0.30);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.20);
+      animation: dropIn 200ms ease-out;
     }
+
+    @keyframes dropIn{
+      from{ transform: translateY(-8px); opacity:0; }
+      to{ transform: translateY(0); opacity:1; }
+    }
+
+    form{ margin-top:10px; }
 
     label{
       display:block;
       font-size:13px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.85);
       margin-top:12px;
       margin-bottom:6px;
     }
@@ -161,18 +175,16 @@ session_start();
       border: 1px solid rgba(255,255,255,0.35);
       outline:none;
       font-size:14px;
-
-      
       background: rgba(255,255,255,0.22);
-      color: var(--text);
+      color: #ffffff;
     }
 
     input::placeholder{
-      color: rgba(15,23,42,0.55);
+      color: rgba(255,255,255,0.70);
     }
 
     input:focus{
-      border-color: rgba(37,99,235,0.85);
+      border-color: rgba(255,255,255,0.60);
       box-shadow: 0 0 0 4px rgba(14,165,233,0.25);
     }
 
@@ -185,6 +197,7 @@ session_start();
       background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
       color:white;
       font-size:14px;
+      font-weight:700;
       cursor:pointer;
       transition: filter 140ms ease, transform 140ms ease;
     }
@@ -198,26 +211,33 @@ session_start();
       transform: translateY(0);
     }
 
- 
     @media (max-width: 480px){
       #login-card{ width:100%; max-width:360px; }
       #ticket-badge{ left:12px; top:-18px; transform:none; }
     }
 
-    
+    #login-card a{
+        text-decoration: none;
+        color: #ffffff;
+        transition: color 0.3s
+    }
+    #login-card a:hover{
+        color: #afb8c6;
+    }
   </style>
 </head>
 
 <body>
 
   <div id="login-card">
-   
+    
+    <?php if ($error !== "") { ?>
+      <div id="error-box"><?php echo htmlspecialchars($error); ?></div>
+    <?php } ?>
 
-   
     <div id="logo">
       <img src="/opsdesk-practice/assets/Ticket.png" alt="OpsDesk Logo">
     </div>
-   
 
     <div id="card-title">
       <h1>OpsDesk</h1>
@@ -230,17 +250,12 @@ session_start();
 
       <label for="password">Password</label>
       <input id="password" name="password" type="password" placeholder="Enter your password" required>
-      
 
       <button type="submit" name="login_btn">Login</button>
+
+      <div style="text-align:center; margin-top: 10px;font-size: 12px;"><a href="register.php">Create account </a></div>
     </form>
   </div>
-<script>
 
-
-
-
-
-</script>
 </body>
 </html>
