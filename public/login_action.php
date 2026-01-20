@@ -35,7 +35,7 @@ $now = date("Y-m-d H:i:s");
 
 $upd = mysqli_prepare($conn, "SELECT users SET last_login = ?   WHERE id=?");
 mysqli_stmt_bind_param($upd, "si", $now, $user["id"]);
-myswli_stmt_execute($upd);
+mysqli_stmt_execute($upd);
 
 header("Location: index.php");
 exit;
