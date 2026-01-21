@@ -12,10 +12,11 @@ if ($fullname === "" || $email === "" || $password === "" || $role === "") {
   exit;
 }
 
-if ($role !== "Agent" && $role !== "Requester") {
+if ($role !== "Agent" && $role !== "Requester" && $role == "Select" ) {
   header("Location: register.php?error=" . urlencode("Invalid role."));
   exit;
 }
+
 
 $stmt = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ? LIMIT 1");
 mysqli_stmt_bind_param($stmt, "s", $email);
