@@ -9,3 +9,7 @@ Runs on XAMPP (Apache + MySQL).
 3. Open:
 - http://localhost/opsdesk-practice/public/
 - http://localhost/opsdesk-practice/public/api/health.php
+
+
+This is a simple ticketing system that's still under development. Started January Thirdweek
+
